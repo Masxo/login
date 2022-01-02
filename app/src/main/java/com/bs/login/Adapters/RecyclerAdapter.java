@@ -57,9 +57,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BasicV
             if (data_i != null) {
                 // setting data based on hashmap
                 ((RecyclerLayoutBinding) holder.binding).nome.setText((String) data_i.get("Nome"));
-                ((RecyclerLayoutBinding) holder.binding).data.setText(((Timestamp) data_i.get("Data")).toDate().toString());
+                ((RecyclerLayoutBinding) holder.binding).data.setText(((Timestamp) data_i.get("Time")).toDate().toString());
                 // get time of login
-                double d = Double.parseDouble(((Timestamp) data_i.get("Data")).toDate()
+                double d = Double.parseDouble(((Timestamp) data_i.get("Time")).toDate()
                         .toString().split(" ")[3].replaceFirst(":", ".")
                         .split(":")[0]);
                 // verify if login is in allowed time - 8.45 = 8h45m | 13.30 = 13h45m

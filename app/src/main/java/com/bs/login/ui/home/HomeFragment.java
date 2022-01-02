@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
                 Snackbar.make(binding.getRoot(), "ERRO", Snackbar.LENGTH_LONG)
                         .setAction("Tente novamente", v -> QR_scanner.initiateScan()).show();
             } else {
-                // clear the single instance of hte user
+                // clear the single instance of the user
                 user.clear();
                 // add the relevant data
                 user.put("Time", new Timestamp(new Date()));
@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment {
                     // find the element in the list, update it's data and the recyclerView
                     for (Map<String, Object> users : DB_dataset) {
                         if (users.containsValue(res)) {
-                            DB_dataset.get(DB_dataset.indexOf(users)).replace("Data", user.get("Time"));
+                            DB_dataset.get(DB_dataset.indexOf(users)).replace("Time", user.get("Time"));
                             mAdapter.setData(DB_dataset);
                             break;
                         }
@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // internal sort with basic comparator
             DB_dataset.sort((o1, o2) -> {
-                if (s.equals("Data"))
+                if (s.equals("Time"))
                     return ((Timestamp) o2.get(s)).compareTo((Timestamp) o1.get(s));
                 else
                     return ((String) o1.get(s)).compareTo((String) o2.get(s));

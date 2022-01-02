@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements FragmentActivityC
         NavigationUI.setupWithNavController(bottomNav, navController);
 
         // Searching data
-        DB.orderBy("Data", Query.Direction.DESCENDING).get().addOnCompleteListener(task -> {
+        DB.orderBy("Time", Query.Direction.DESCENDING).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 List<String> list = new ArrayList<>();
                 for (DocumentSnapshot document : task.getResult()) {
@@ -84,11 +84,11 @@ public class MainActivity extends AppCompatActivity implements FragmentActivityC
                     DB.document(document.getId()).collection("Time").orderBy("Time", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(task2 -> {
                         if (task2.isSuccessful()) {
                             for (QueryDocumentSnapshot document2 : task2.getResult()) {
-                                DB.document(document.getId()).update("Data", document2.get("Time"));
+                                DB.document(document.getId()).update("Time", document2.get("Time"));
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                     for (Map<String, Object> users : DB_dataset) {
                                         if (users.containsValue(document.getId())) {
-                                            DB_dataset.get(DB_dataset.indexOf(users)).replace("Data", document2.get("Time"));
+                                            DB_dataset.get(DB_dataset.indexOf(users)).replace("Time", document2.get("Time"));
                                             break;
                                         }
                                     }
@@ -112,7 +112,9 @@ public class MainActivity extends AppCompatActivity implements FragmentActivityC
 
     @Override
     public void updateDatabase(Map<String,Object> data) {
+        if(!DB.document((String) data.get("Nome")).get().isSuccessful())
+            DB.document((String) data.get("Nome")).set(data);
         DB.document((String) data.get("Nome")).collection("Time").add(data);
-        DB.document((String) data.get("Nome")).update("Data", data.get("Time"));
+        DB.document((String) data.get("Nome")).update("Time", data.get("Time"));
     }
 }

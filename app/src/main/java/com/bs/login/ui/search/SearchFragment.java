@@ -75,8 +75,8 @@ public class SearchFragment extends Fragment {
             // it tries to parse the data set in the binding
             try {
                 // firebase structured querie
-                DB.whereLessThan("Data",new Timestamp(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(binding.pesquisaData.getText().toString().trim()+" 23:59:59")))
-                        .whereGreaterThan("Data",new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(binding.pesquisaData.getText().toString().trim()+" 00:00:00"))
+                DB.whereLessThan("Time",new Timestamp(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(binding.pesquisaData.getText().toString().trim()+" 23:59:59")))
+                        .whereGreaterThan("Time",new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(binding.pesquisaData.getText().toString().trim()+" 00:00:00"))
                         .get().addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
                         // clearing the dataset
@@ -113,7 +113,7 @@ public class SearchFragment extends Fragment {
                         // creating a object for each data
                         Map<String,Object> user = new HashMap<>();
                         // adding a data and name to the object
-                        user.put("Data",document.get("Time"));
+                        user.put("Time",document.get("Time"));
                         user.put("Nome",binding.pesquisaNome.getSelectedItem().toString());
                         // adding the object to the list
                         DB_dataset.add(user);
